@@ -15,6 +15,15 @@ class Session{
       return $_SESSION[$key];
     }
   }
+
+  public static function checkSession() {
+    self::init();
+    if(self::get('login') == false) {
+      self::init();
+      self::destroy();
+      header("Location: " . BASE_URL . "/Login");
+    }
+  } 
   
   public static function destroy() {
     session_destroy();

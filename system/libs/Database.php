@@ -19,8 +19,12 @@
       $values = ":" . implode(', :', array_keys($data));
       $sql = "INSERT INTO $table($keys) VALUES($values)";
       $stmt = $this->prepare($sql);
-      foreach ($data as $key => &$value) { // $value must be handled by reference...WHY?
-        $stmt->bindParam(":$key", $value);
+      // If we use bindParam function then $value must be handled by reference...WHY?
+      // foreach ($data as $key => &$value) {
+      //   $stmt->bindParam(":$key", $value);
+      // }
+      foreach ($data as $key => $value) {
+        $stmt->bindValue(":$key", $value);
       }
       return $stmt->execute();
     }

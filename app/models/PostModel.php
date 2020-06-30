@@ -10,6 +10,11 @@ class PostModel extends DModel{
     return $this->db->select($sql);
   }
 
+  public function getPostList($postTable, $catTable) {
+    $sql = "SELECT $postTable.*, $catTable.name FROM $postTable INNER JOIN $catTable ON $postTable.cat = $catTable.id ORDER BY $postTable.id DESC";
+    return $this->db->select($sql);
+  }
+
   public function getPostById($postTable, $catTable, $id) {
     $sql = "SELECT $postTable.*, $catTable.name FROM $postTable INNER JOIN $catTable ON $postTable.cat = $catTable.id WHERE $postTable.id = $id";
     return $this->db->select($sql);
@@ -28,6 +33,10 @@ class PostModel extends DModel{
       $sql = "SELECT * FROM $postTable WHERE cat = $catId";
       return $this->db->select($sql);
     }
+  }
+
+  public function insertPost($table, $data) {
+    return $this->db->insert($table, $data);
   }
   
 }
