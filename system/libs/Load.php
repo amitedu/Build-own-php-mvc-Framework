@@ -13,6 +13,11 @@ class Load{
     return new $modelName();
   }
 
+  public function validation($fileName) {
+    require_once 'app/validation/' . $fileName . '.php';
+    return new $fileName();
+  }
+
 }
 
 ?>

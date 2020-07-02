@@ -1,11 +1,41 @@
 <script src="https://cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
 <h2>Add Article</h2>
+<?php
+  if(isset($postErrors)) {
+    echo '<div style="border: 1px solid red; color: red; padding: 5px 10px; margin: 5px">';
+    foreach($postErrors as $key => $value) {
+      switch($key) {
+        case 'title':
+          foreach($value as $val) {
+            echo "Title: ". $val . "<br/>";
+          }
+        break;
 
+        case 'content':
+          foreach($value as $val) {
+            echo "Content: " . $val . "<br/>";
+          }
+        break;
+
+        case 'cat':
+          foreach ($value as $val) {
+            echo "Category: " . $val . "<br/>";
+          }
+        break;
+
+        default:
+        break;
+      }
+    }
+    echo '</div>';
+  }
+
+?>
 <form action="<?= BASE_URL; ?>/Admin/insertPost/" method="POST">
   <table>
     <tr>
-      <td>Article Title: </td>
-      <td><input type="text" name="title" required="1" ></td>
+      <td>Title: </td>
+      <td><input type="text" name="title"></td>
     </tr>
     <tr>
       <td>Content: </td>
