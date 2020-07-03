@@ -19,6 +19,11 @@ class PostModel extends DModel{
     $sql = "SELECT $postTable.*, $catTable.name FROM $postTable INNER JOIN $catTable ON $postTable.cat = $catTable.id WHERE $postTable.id = $id";
     return $this->db->select($sql);
   }
+
+  public function postById($table, $id) {
+    $sql = "SELECT * FROM $table WHERE id = $id";
+    return $this->db->select($sql);
+  }
   
   public function postByCategory($postTable, $catTable, $catId) {
     $sql = "SELECT $postTable.*, $catTable.name FROM $postTable INNER JOIN $catTable ON $postTable.cat = $catTable.id WHERE $catTable.id = $catId";
@@ -37,6 +42,15 @@ class PostModel extends DModel{
 
   public function insertPost($table, $data) {
     return $this->db->insert($table, $data);
+  }
+
+  public function updatePostById($table, $cond, $data) {
+    return $this->db->update($table, $cond, $data);
+  }
+
+  public function deletePost($table, $id) {
+    $cond = "id = $id";
+    return $this->db->delete($table, $cond);
   }
   
 }

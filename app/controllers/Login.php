@@ -34,6 +34,7 @@ class Login extends DControllers{
       Session::set('login', true);
       Session::set('id', $userData[0]['username']);
       Session::set('username', $userData[0]['username']);
+      Session::set('level', $userData[0]['level']);
       header("Location:".BASE_URL."/Admin");
     } else {
       header("Location: " . BASE_URL . "/Login");

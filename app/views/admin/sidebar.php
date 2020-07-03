@@ -9,6 +9,23 @@
 			</ul>
 		</div>
 
+		<?php
+			if(Session::get('level') !=2 && Session::get('level') != 3) {
+		?>
+		<div class="widget">
+			<h3>User Option</h3>
+			<ul>
+				<li><a href="<?= BASE_URL; ?>/User/makeUser">Add User</a></li>
+				<li><a href="<?= BASE_URL; ?>/User/listUser">User List</a></li>
+			</ul>
+		</div>
+		<?php
+			}
+		?>
+
+		<?php
+			if(Session::get('level') != 3) {
+		?>
 		<div class="widget">
 			<h3>Category Option</h3>
 			<ul>
@@ -16,6 +33,9 @@
 				<li><a href="<?= BASE_URL; ?>/Admin/category">Category List</a></li>
 			</ul>
 		</div>
+		<?php
+			}
+		?>
 
 		<div class="widget">
 			<h3>Post Option</h3>

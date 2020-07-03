@@ -21,7 +21,7 @@
     }
 
     public function isCatEmpty() {
-      if(empty($this->values[$this->currentValue]) == 0) {
+      if($this->values[$this->currentValue] == 0) {
         $this->errors[$this->currentValue]['catEmpty'] = "Field must not be empty";
       }
       return $this;

@@ -56,8 +56,8 @@ class Admin extends DControllers {
 
     if($validation->submit()) {
       $data = array(
-        'name' => $_POST['name'],
-        'title' => $_POST['title']
+        'name' => $validation->values['name'],
+        'title' => $validation->values['title']
       );
       $table    = 'tbl_category';
       $catModel = $this->load->model('CatModel');
@@ -224,6 +224,87 @@ class Admin extends DControllers {
       $this->load->view('admin/footer');
   
     }
+  }
+
+  public function displayEditArticle($id) {
+    $tableCat  = 'tbl_category';
+    $tablePost = 'tbl_posts';
+    $data  = array();
+
+    $this->load->view('admin/header');
+    $this->load->view('admin/sidebar');
+
+    $postModel = $this->load->model('PostModel');
+    $data['postById'] = $postModel->postById($tablePost, $id);
+    
+    $catModel = $this->load->model('CatModel');
+    $data['catList']   = $catModel->catList($tableCat);
+
+    $this->load->view('admin/displayEditArticle', $data);
+    $this->load->view('admin/footer');
+  }
+
+  public function updateArticle($id = NULL) {
+    $validation = $this->load->validation('DForm');
+    $validation->post('title')->isEmpty()->length(5, 50);
+    $validation->post('content')->isEmpty()->length(50,800);
+    $validation->post('cat')->isCatEmpty();
+
+    if($validation->submit()) {
+      $data = array(
+        'title' => $validation->values['title'],
+        'content' => $validation->values['content'],
+        'cat' => $validation->values['cat']
+      );
+
+      $tablePost = 'tbl_posts';
+      $cond = "id=$id";
+
+      $postModel = $this->load->model('PostModel');
+      $result = $postModel->updatePostById($tablePost, $cond, $data);
+
+      $msgData = array();
+      if($result) {
+        $msgData['msg'] = '<span style="color:blue;font-weight:bold;">Post Updated successfully</span>';
+      } else {
+        $msgData['msg'] = '<span style="color:blue;font-weight:bold;">Post can not be updated</span>';
+      }
+
+      $url = BASE_URL . "/admin/articleList?msg=" . urlencode(serialize($msgData));
+      header("Location: $url");
+    } else {
+      $data['updateError'] = $validation->errors;
+      $tablePost = 'tbl_posts';
+      $tableCat  = 'tbl_category';
+
+      $postModel = $this->load->model('PostModel');
+      $data['postById'] = $postModel->postById($tablePost, $id);
+      
+      $catModel = $this->load->model('CatModel');
+      $data['catList']   = $catModel->catList($tableCat);
+  
+      $this->load->view('admin/displayEditArticle', $data);
+      }
+    
+  }
+
+  public function deleteArticle($id) {
+    $tablePost = 'tbl_posts';
+    $tableCat  = 'tbl_category';
+    $data      = array();
+
+    $postModel = $this->load->model('PostModel');
+    $result = $postModel->deletePost($tablePost, $id);
+
+    $msgData = array();
+    if($result) {
+      $msgData['msg'] = '<span style="color:blue;font-weight:bold;">Post Deleted successfully</span>';
+    } else {
+      $msgData['msg'] = '<span style="color:blue;font-weight:bold;">Post can not be Deleted</span>';
+    }
+    
+    $url = BASE_URL . "/admin/articleList?msg=" . urlencode(serialize($msgData));
+    header("Location: $url");
   }
   
 }

@@ -45,7 +45,15 @@
         ?>
       </td>
       <td><?= $value['name']; ?></td>
-      <td><a href="">Edit</a> || <a href="">Delete</a></td>
+      <?php
+        if(Session::get('level') != 2 && Session::get('level') != 3) {
+      ?>
+      <td><a href="<?= BASE_URL; ?>/Admin/displayEditArticle/<?= $value['id']; ?>">Edit</a> || <a onclick="return confirm('Are you sure to Delete?');" href="<?= BASE_URL; ?>/Admin/deleteArticle/<?= $value['id']; ?>">Delete</a></td>
+      <?php
+        } else {
+          echo '<td>Not Applicable</td>';
+        }
+      ?>
     </tr>
   <?php } ?>
 
