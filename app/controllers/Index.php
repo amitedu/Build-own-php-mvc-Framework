@@ -35,7 +35,7 @@ class Index extends DControllers{
     $this->load->view('footer');
   }
 
-  public function postDetails($postId) {
+  public function postDetails($postId=NULL) {
     $data = array();
     $postTable = 'tbl_posts';
     $catTable  = 'tbl_category';
@@ -60,7 +60,7 @@ class Index extends DControllers{
     $this->load->view('footer');
   }
 
-  public function postByCat($catId) {
+  public function postByCat($catId=NULL) {
     $data = array();
     $postTable = 'tbl_posts';
     $catTable  = 'tbl_category';
@@ -115,6 +115,10 @@ class Index extends DControllers{
     $this->load->view('sidebar', $data);
     
     $this->load->view('footer');
+  }
+
+  public function notFound() {
+    $this->load->view('404');
   }
   
 }

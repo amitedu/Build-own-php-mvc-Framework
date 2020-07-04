@@ -1,5 +1,6 @@
 <div class="content">
-	Admin Page<hr>
+	Admin Page <span style="float: right;"><a style="text-decoration: none;" href="<?= BASE_URL; ?>">Visit Website</a></span>
+	<hr>
 	<aside class="adminLeft">
 		<div class="widget">
 			<h3>Site Option</h3>
