@@ -5,6 +5,7 @@
 			<h3>Site Option</h3>
 			<ul>
 				<li><a href="<?= BASE_URL; ?>/Admin">Home</a></li>
+				<li><a href="<?= BASE_URL; ?>/Admin/uioption">UI Option</a></li>
 				<li><a href="<?= BASE_URL; ?>/Login/logout">Logout</a></li>
 			</ul>
 		</div>

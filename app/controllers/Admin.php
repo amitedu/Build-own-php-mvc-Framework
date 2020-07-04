@@ -267,7 +267,7 @@ class Admin extends DControllers {
       if($result) {
         $msgData['msg'] = '<span style="color:blue;font-weight:bold;">Post Updated successfully</span>';
       } else {
-        $msgData['msg'] = '<span style="color:blue;font-weight:bold;">Post can not be updated</span>';
+        $msgData['msg'] = '<span style="color:red;font-weight:bold;">Post can not be updated</span>';
       }
 
       $url = BASE_URL . "/admin/articleList?msg=" . urlencode(serialize($msgData));
@@ -300,11 +300,51 @@ class Admin extends DControllers {
     if($result) {
       $msgData['msg'] = '<span style="color:blue;font-weight:bold;">Post Deleted successfully</span>';
     } else {
-      $msgData['msg'] = '<span style="color:blue;font-weight:bold;">Post can not be Deleted</span>';
+      $msgData['msg'] = '<span style="color:red;font-weight:bold;">Post can not be Deleted</span>';
     }
     
     $url = BASE_URL . "/admin/articleList?msg=" . urlencode(serialize($msgData));
     header("Location: $url");
+  }
+
+  public function uioption() {
+    $tableColor = 'tbl_colors';
+    $cond = "id=1";
+
+    $uiModel = $this->load->model('UiModel');
+    $data['bgcolor'] = $uiModel->getBgColor($tableColor, $cond);
+    
+    $this->load->view('admin/header', $data);
+    $this->load->view('admin/sidebar');
+    $this->load->view('admin/ui');
+    $this->load->view('admin/footer');
+  }
+
+  public function changeColor() {
+    if(!($_POST)) {
+      header("Location: ". BASE_URL . "/Admin/uioption" );
+    }
+
+    $tableColor = 'tbl_colors';
+    $data = array(
+      'element' => 'background',
+      'color' => $_POST['color']
+    );
+    $cond = "id=1";
+
+    $uiModel = $this->load->model('uiModel');
+    $result  = $uiModel->updateColor($tableColor, $cond, $data);
+    
+    $msgData = array();
+    if($result) {
+      $msgData['msg'] = '<span style="color:blue;font-weight:bold;">Color Changed successfully</span>';
+    } else {
+      $msgData['msg'] = '<span style="color:red;font-weight:bold;">Color not changed!</span>';
+    }
+    
+    $url = BASE_URL . "/Admin/uioption?msg=" . urlencode(serialize($msgData));
+    header("Location: $url");
+    
   }
   
 }

@@ -14,6 +14,17 @@
       return $stmt->fetchAll();
     }
 
+    public function selectByCondition($table, $cond) {
+      try {
+        $sql = "SELECT * FROM $table WHERE $cond";
+        $stmt = $this->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+      } catch (Exception $e) {
+        echo $e->getMessage();
+      }
+    }
+
     public function insert($table, $data) {
       $keys = implode(', ', array_keys($data));
       $values = ":" . implode(', :', array_keys($data));
